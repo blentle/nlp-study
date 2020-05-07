@@ -89,7 +89,8 @@ def squeeze_content():
     id2word[1] = 'UNK'
     ## 词语到词频的映射
     word2id = {j: i for i, j in id2word.items()}
-
+    nb_word = len(id2word)
+    data_generator(corpus, word2id, nb_word)
 
 
 def read_file(file_name):
@@ -101,17 +102,31 @@ def read_file(file_name):
         content_lines[i] = content_lines[i].rstrip("\n")
     return content_lines
 
+
 ## 获取负采样
-def get_negative_samples(x, word_index_range, neg_num):
+def get_negtive_samples(x, word_size, neg_num):
     negs = []
     while True:
-        rand = random.randrange(0, word_index_range)
+        rand = random.randrange(0, word_size)
         if rand not in negs and rand != x:
             negs.append(rand)
         if len(negs) == neg_num:
             return negs
 
 
+##构造训练数据
+def data_generator(corpus, word2id, nb_word):
+    x, y = [], []
+    for sentence in corpus:
+        sentence = [0] * window_size + [word2id[w] for w in sentence if w in word2id] + [0] * window_size
+        for i in range(window_size, len(sentence) - window_size):
+            x.append(sentence[i - window_size: i] + sentence[i + 1: window_size + i + 1])
+            y.append([sentence[i]] + get_negtive_samples(sentence[i], nb_word, nb_negative))
+    x, y = np.array(x), np.array(y)
+    z = np.zeros((len(x), nb_negative + 1))
+    z[:, 0] = 1
+
+    return x, y, z
 
 # 抽取预料,统计词频
 squeeze_content()
