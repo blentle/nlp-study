@@ -16,7 +16,7 @@ word_size = 128
 window_size = 5
 ## 随机负采样的样本数
 nb_negative = 50
-## 设定频数少于10的抛弃掉
+## 设定频数少于3的抛弃掉
 min_count = 10
 ## 循环次数
 nb_epoch = 2
@@ -69,28 +69,49 @@ def squeeze_content():
         doc_list = re.findall(r, content)
         for i in range(len(doc_list)):
             line = doc_list[i]
-            if(line != ''):
+            if (line != ''):
                 ## 去掉停用词，标点符号
                 stopwords = read_file(stopwords_file_path)
                 p = [word for word in jieba.cut(line) if word not in stopwords]
                 corpus += p
                 words += p
     words = dict(Counter(words))
+    ## 总词频
     total = sum(words.values())
     print(total)
+    ## 去掉低频次
+    words = {i: j for i, j in words.items() if j >= min_count}
+    print(sum(words.values()))
+    ## 词频到词语的映射
+    id2word = {i + 2: j for i, j in enumerate(words)}
+    ## pad用于补全窗口不够的词语， unk用于替换未在字典中出现的词语
+    id2word[0] = 'PAD'
+    id2word[1] = 'UNK'
+    ## 词语到词频的映射
+    word2id = {j: i for i, j in id2word.items()}
+
 
 
 def read_file(file_name):
     fp = open(file_name, "r", encoding="utf-8")
     content_lines = fp.readlines()
     fp.close()
-    #去除行末的换行符，否则会在停用词匹配的过程中产生干扰
+    # 去除行末的换行符，否则会在停用词匹配的过程中产生干扰
     for i in range(len(content_lines)):
         content_lines[i] = content_lines[i].rstrip("\n")
     return content_lines
 
+## 获取负采样
+def get_negative_samples(x, word_index_range, neg_num):
+    negs = []
+    while True:
+        rand = random.randrange(0, word_index_range)
+        if rand not in negs and rand != x:
+            negs.append(rand)
+        if len(negs) == neg_num:
+            return negs
 
-#抽取预料,统计词频
+
+
+# 抽取预料,统计词频
 squeeze_content()
-
-
