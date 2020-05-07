@@ -27,6 +27,7 @@ nb_epoch = 2
 file_path = 'E:\\nlp-dataset\\sougou_news\\'
 file_output_path = file_path + "datasets\\"
 source_file_path = file_path + '0.txt'
+stopwords_file_path = 'E:\\nlp-dataset\\stopwords.dat'
 ## 每个文件多少个doc
 doc_size = 6000
 
@@ -55,4 +56,41 @@ def split_files():
         spilt_file.close()
 
 
-split_files()
+## 抽取预料内容
+def squeeze_content():
+    ## 语料库
+    corpus = []
+    ## 词库
+    words = []
+    with open(file_output_path + "0.txt", 'r', encoding='utf-8') as f:
+        ## 提取content内容
+        content = f.read()
+        r = re.compile(r'<content>(.*)?</content>')
+        doc_list = re.findall(r, content)
+        for i in range(len(doc_list)):
+            line = doc_list[i]
+            if(line != ''):
+                ## 去掉停用词，标点符号
+                stopwords = read_file(stopwords_file_path)
+                p = [word for word in jieba.cut(line) if word not in stopwords]
+                corpus += p
+                words += p
+    words = dict(Counter(words))
+    total = sum(words.values())
+    print(total)
+
+
+def read_file(file_name):
+    fp = open(file_name, "r", encoding="utf-8")
+    content_lines = fp.readlines()
+    fp.close()
+    #去除行末的换行符，否则会在停用词匹配的过程中产生干扰
+    for i in range(len(content_lines)):
+        content_lines[i] = content_lines[i].rstrip("\n")
+    return content_lines
+
+
+#抽取预料,统计词频
+squeeze_content()
+
+
