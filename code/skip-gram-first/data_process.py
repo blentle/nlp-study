@@ -2,8 +2,8 @@ import csv
 import jieba
 from collections import Counter
 
-## 去掉没用的词
-REMOVE_WORDS = ['[', ']', '语音', '图片']
+## 去掉没用的词，发现说的频率很高
+REMOVE_WORDS = ['[', ']', '语音', '图片', '说']
 
 
 ## 分词,返回分完词后的list
