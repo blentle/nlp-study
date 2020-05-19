@@ -37,7 +37,5 @@ def build_word2vector_model(line_data_list_file_path, model_persist_path):
 
 
 if __name__ == '__main__':
-    list = ["a", 'b', 'c', 'c', 'c', 'a']
-    dict = dict(Counter(list))
-    words2id = sorted(dict.items(), key=lambda kv: (kv[0], kv[1]), reverse=False)
-    print(words2id)
+    ## todo:
+    pass
