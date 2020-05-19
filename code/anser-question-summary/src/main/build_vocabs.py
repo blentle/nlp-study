@@ -1,5 +1,17 @@
 from collections import Counter
 
+## 读取切完词保存的路径，每个词按空格分隔，读取到的每个词放在list中返回:["word1","word2"]
+def read_words_to_list(file_path):
+    words = []
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            ## 去掉空格
+            line = line.strip()
+            ## 去掉空字符串
+            p = [w for w in line.split() if w.strip() != '']
+            words += p
+    f.close()
+    return words
 
 ## 构建正向、反向字典 word2id, id2word,并去掉低频词,频数低于 min_count的词会被去掉
 def build_vocabs(train_x_cut_list, train_y_cut_list, test_x_cut_list, min_count):
@@ -23,26 +35,26 @@ def build_vocabs(train_x_cut_list, train_y_cut_list, test_x_cut_list, min_count)
         words2id[index + 1] = dict_data[0]
         id2words[dict_data[0]] = index + 1
     ## 也返回词的频数字典
+    print("build vocabs successfully...")
+    words2id = sorted(words2id.items(), key=lambda kv: (kv[1], kv[0]), reverse=False)
+    id2words = sorted(id2words.items(), key=lambda kv: (kv[0], kv[1]), reverse=False)
     return words2id, id2words, p
 
 
-## 读取切完词保存的路径，每个词按空格分隔，读取到的每个词放在list中返回:["word1","word2"]
-def read_words_to_list(file_path):
-    words = []
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            ## 去掉空格
-            line = line.strip()
-            ## 去掉空字符串
-            p = [w for w in line.split() if w.strip() != '']
-            words += p
+##保存 words2id、id2words、p到磁盘，供后续使用
+## 参数dict_data 注意这里是列表类型，不是字典类型
+## 参数dist_path 保存的磁盘路径
+def persist_dict_data(dict_data_list, dist_path):
+    print("begin to persist dict_data to " + str(dist_path) + " ....")
+    with open(dist_path, "w", encoding='utf-8') as f:
+        for index, data in enumerate(dict_data_list):
+            f.writelines(data[0] + " " + str(data[1]) + "\n")
     f.close()
-    return words
+    print("persist dict_data " + str(dist_path) + " successfully")
 
 
 if __name__ == '__main__':
     list = ["a", 'b', 'c', 'c', 'c', 'a']
     dict = dict(Counter(list))
-    p = sorted(dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
-    for index, dict_data in enumerate(p):
-        print(dict_data[1])
+    words2id = sorted(dict.items(), key=lambda kv: (kv[0], kv[1]), reverse=False)
+    print(words2id)

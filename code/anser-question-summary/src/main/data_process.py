@@ -132,7 +132,7 @@ if __name__ == '__main__':
     with open('../../temp/vocab.txt', 'w', encoding='utf-8') as f:
         i = 0
         for index, dic in enumerate(p):
-            f.writelines(dic[0] + "\t" + str(index) + "\n")
+            f.writelines(dic[0] + " " + str(index) + "\n")
             i += 1
             print('已写入第' + str(index) + "个词，词频是:" + str(dic[1]))
     f.close()
