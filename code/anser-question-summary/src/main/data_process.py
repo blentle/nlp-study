@@ -108,7 +108,7 @@ if __name__ == '__main__':
     train_x, train_y, test_x, test_y = clean_data_draft("../resources/AutoMaster_TrainSet.csv",
                                                         "../resources/AutoMaster_TestSet.csv")
     ## 生成分完词的文件，以一个空格隔开
-    stop_words_file_path = '../resources/stopwords.dat'
+    stop_words_file_path = '../resources/stopwords.txt'
     print("begin to save train-x..........")
     train_x_list = clean_data_save_split_words(train_x, stop_words_file_path, '../../temp/train-x.txt')
     print("end to save train-x..........")

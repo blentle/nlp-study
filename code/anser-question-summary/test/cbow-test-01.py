@@ -27,7 +27,7 @@ nb_epoch = 2
 file_path = 'E:\\nlp-dataset\\sougou_news\\'
 file_output_path = file_path + "datasets\\"
 source_file_path = file_path + '0.txt'
-stopwords_file_path = 'E:\\nlp-dataset\\stopwords.dat'
+stopwords_file_path = 'E:\\nlp-dataset\\stopwords.txt'
 ## 每个文件多少个doc
 doc_size = 6000
 
