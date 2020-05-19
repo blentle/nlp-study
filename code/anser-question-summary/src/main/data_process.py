@@ -105,21 +105,21 @@ def clean_data_save_split_words(train_sentence_data, stop_words_path, target_fil
 
 
 if __name__ == '__main__':
-    train_x, train_y, test_x, test_y = clean_data_draft("E:/nlp-dataset/AutoMaster_TrainSet.csv",
-                                                        "E:/nlp-dataset/AutoMaster_TestSet.csv")
+    train_x, train_y, test_x, test_y = clean_data_draft("../resources/AutoMaster_TrainSet.csv",
+                                                        "../resources/AutoMaster_TestSet.csv")
     ## 生成分完词的文件，以一个空格隔开
-    stop_words_file_path = 'E:/nlp-dataset/stopwords.dat'
+    stop_words_file_path = '../resources/stopwords.dat'
     print("begin to save train-x..........")
-    train_x_list = clean_data_save_split_words(train_x, stop_words_file_path, 'E:/nlp-dataset/gen/train-x.txt')
+    train_x_list = clean_data_save_split_words(train_x, stop_words_file_path, '../../temp/train-x.txt')
     print("end to save train-x..........")
     print("begin to save train-y..........")
-    train_y_list = clean_data_save_split_words(train_y, stop_words_file_path, 'E:/nlp-dataset/gen/train-y.txt')
+    train_y_list = clean_data_save_split_words(train_y, stop_words_file_path, '../../temp/train-y.txt')
     print("end to save train-y..........")
     print("begin to save test-x..........")
-    test_x_list = clean_data_save_split_words(test_x, stop_words_file_path, 'E:/nlp-dataset/gen/test-x.txt')
+    test_x_list = clean_data_save_split_words(test_x, stop_words_file_path, '../../temp/test-x.txt')
     print("end to save test-x..........")
     print("begin to save test-y..........")
-    test_y_list = clean_data_save_split_words(test_y, stop_words_file_path, 'E:/nlp-dataset/gen/test-y.txt')
+    test_y_list = clean_data_save_split_words(test_y, stop_words_file_path, '../../temp/test-y.txt')
     print("end to save test-y..........")
     ## 合到一起
     train_x_list += train_y_list
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     ## 按词频降序排序
     p = sorted(word_fre_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
     # 写文件: word index格式
-    with open('E:/nlp-dataset/gen/vocab.txt', 'w', encoding='utf-8') as f:
+    with open('../../temp/vocab.txt', 'w', encoding='utf-8') as f:
         i = 0
         for index, dic in enumerate(p):
             f.writelines(dic[0] + "\t" + str(index) + "\n")
