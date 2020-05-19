@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 ## 读取切完词保存的路径，每个词按空格分隔，读取到的每个词放在list中返回:["word1","word2"]
 def read_words_to_list(file_path):
     words = []
@@ -12,6 +13,7 @@ def read_words_to_list(file_path):
             words += p
     f.close()
     return words
+
 
 ## 构建正向、反向字典 word2id, id2word,并去掉低频词,频数低于 min_count的词会被去掉
 def build_vocabs(train_x_cut_list, train_y_cut_list, test_x_cut_list, min_count):
@@ -54,7 +56,10 @@ def persist_dict_data(dict_data_list, dist_path):
 
 
 if __name__ == '__main__':
-    list = ["a", 'b', 'c', 'c', 'c', 'a']
-    dict = dict(Counter(list))
-    words2id = sorted(dict.items(), key=lambda kv: (kv[0], kv[1]), reverse=False)
-    print(words2id)
+    train_x_cut_list = read_words_to_list("../../temp/train-x.txt")
+    train_y_cut_list = read_words_to_list("../../temp/train-y.txt")
+    test_x_cut_list = read_words_to_list("../../temp/test-x.txt")
+    words2id, id2words, fre_p = build_vocabs(train_x_cut_list, train_y_cut_list, test_x_cut_list, 2)
+    persist_dict_data(words2id, "../../temp/words_to_id.txt")
+    persist_dict_data(id2words, "../../temp/id_to_words.txt")
+    persist_dict_data(fre_p, "../../temp/words-fre.txt")
