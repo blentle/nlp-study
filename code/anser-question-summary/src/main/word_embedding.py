@@ -10,7 +10,7 @@ def build_word_emmbeding(w2v_model_bin_path, embedding_dict_path):
             word_matrix = model.get_vector(word)
             ##因为得到的是numpy array类型,这里需要转换
             word_matrix_list = word_matrix.tolist()
-            matrix_str = [str(vec) for vec in word_matrix_list ]
+            matrix_str = [str(vec) for vec in word_matrix_list]
             f.writelines(word + " " + " ".join(matrix_str) + "\n")
     f.close()
 

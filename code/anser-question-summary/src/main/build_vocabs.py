@@ -33,9 +33,9 @@ def build_vocabs(train_x_cut_list, train_y_cut_list, test_x_cut_list, min_count)
     words2id = {}
     id2words = {}
     for index, dict_data in enumerate(p):
-        ## 软件强迫症，id 从1 开始
-        id2words[index + 1] = dict_data[0]
-        words2id[dict_data[0]] = index + 1
+        ## 重新修正id 从0开始
+        id2words[index] = dict_data[0]
+        words2id[dict_data[0]] = index
     ## 也返回词的频数字典
     print("build vocabs successfully...")
     words2id = sorted(words2id.items(), key=lambda kv: (kv[1], kv[0]), reverse=False)

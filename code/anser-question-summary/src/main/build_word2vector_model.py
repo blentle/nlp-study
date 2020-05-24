@@ -1,6 +1,6 @@
 from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
-from gensim.models.word2vec import PathLineSentences
+from gensim.models.word2vec import LineSentence
 
 
 ## 读取每一行数据放到list
@@ -32,7 +32,7 @@ def build_word2vector_model(line_data_list_file_path, model_persist_path):
     ##Like :class:`~gensim.models.word2vec.LineSentence`, but process all files in a directory in alphabetical order by filename.
     print("begin to train w2v model...")
     ## 这里我的机器不错，所以开了 12个线程, 5分钟不到就跑完了
-    w2v = Word2Vec(sentences=PathLineSentences(line_data_list_file_path), size=256, window=5, sg=1, min_count=2,
+    w2v = Word2Vec(sentences=LineSentence(line_data_list_file_path), size=256, window=5, sg=1, min_count=2,
                    iter=15,
                    workers=12)
     print("train success....")
