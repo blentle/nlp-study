@@ -4,7 +4,7 @@ import tensorflow as tf
 
 class Encoder(tf.keras.Model):
 
-    ##初始化 encoder_unit 到底长啥样？
+    ##初始化 encoder_unit 编码器神经元的个数
     def __init__(self, vocab_size, embedding_dim_size, embedding_matrix, encoder_unit, batch_size):
         super(Encoder, self).__init__()
         self.batch_size = batch_size
