@@ -37,6 +37,13 @@
 文本获取 > 预处理 > 文本特征工程 > 算法选择 > 效果评估 > 持续调优 > 预测 > 模型上线
 
 ### 第三节知识点
+### Transformer的过程
++ encoder-decoder
++ self-attention
++ multi-head attention
++ positional encoding
++ 解码器Self-Attention输入层与编码器区别：只允许关注输出序列中较前的位置（mask遮罩）
+
 #### Transformer的优点
 + 不同数据的时间和空间关系做假设,可以处理一组对象
 + 层输出可以并行计算, 不像RNN那样需要序列计算
