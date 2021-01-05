@@ -55,3 +55,26 @@
 + 一些任务上有提升
 
 #### GPT
+
+## 2. 使用 [rasa](https://github.com/RasaHQ/rasa) 写一个对话机器人
+
+### a.安装依赖库
+```shell script
+    pip install rasa
+```
+
+### b.安装rasa x 
+```shell script
+    pip install rasa-x --extra-index-url https://pypi.rasa.com/simple
+```
+
+### c.创建一个工程目录, 执行下面的命令创建一个rasa 工程
+```shell script
+    rasa init
+```
+
+### d.启动rasa x 
+```shell script
+    rasa x
+```
+
